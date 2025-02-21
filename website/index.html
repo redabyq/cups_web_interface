@@ -1,0 +1,90 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Принтер</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://redabyq.space/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <header><h2>CUPS <span> Клиент для печати с <b style="font-weight: 800;" >Ubuntu</b> сервера</span></h2></header>
+    <div id="body">    <form id="printForm" action="" method="post" enctype="multipart/form-data">
+        <p id="filetext">Загрузка <br>файла...</p>
+        <input type="file" name="file" id="file"accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.bmp" id="file">
+    <div id="buttons">
+        <div id="status"></div>
+        <button id="b2" >Статус принтера</button>
+        <button id="b1" type="submit" disabled>Печать</button></div>
+</form>
+</div>
+
+</body>
+<script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    $(document).ready(function() {
+        $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
+        $("#file").change(function(){
+            var file = $("#file")[0].files[0]; // Получение файла из инпута
+            if (file) {
+                $("#b1").prop("disabled", false); // Enable the button when a file is selected
+            } else {
+                $("#b1").prop("disabled", true); // Disable the button if no file is selected
+            }
+        });
+        $("#printForm").submit(async function(e) {
+            e.preventDefault(); // Остановка стандартного отправления формы
+            $("#status").text("Загрузка...");
+            $("#b1").prop("disabled", true); // Disable the button after form submission
+            var formData = new FormData(this); // Создание объекта FormData
+            var actionUrl = "http://192.168.1.74:5230/api/print";
+
+            $.ajax({
+                type: "POST",
+                url: actionUrl,
+                data: formData,
+                processData: false, // Отключаем обработку данных jQuery
+                contentType: false, // Отключаем установку content-type
+                success: async function(response) {
+                    console.log(response.msg);
+                    $("#status").text(response.msg);
+                    await sleep(2000);
+                    $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
+                    location.reload();
+                    console.log(response.type); // Вывод ответа сервера
+                },
+                error: async function(xhr, status, error) {
+                    alert("Ошибка: " + error);
+                    await sleep(2000);
+                    $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
+                    location.reload();
+                }
+            });
+        });
+        $("#b2").click(async function(e) {
+            e.preventDefault(); // Предотвращаем стандартное поведение кнопки
+            $("#status").text("Загрузка...");
+            var statusUrl = "http://192.168.1.74:5230/api/status"; // Укажите правильный URL
+
+            $.ajax({
+                type: "GET",
+                url: statusUrl,
+                success: async function(response) {
+                    $("#status").text(response.msg);
+                    await sleep(2000);
+                    $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
+                  
+                },
+                error: async function(xhr, status, error) {
+                    $("#status").text("Ошибка при получении статуса - "+ xhr.responseText);
+                    await sleep(2000);
+                    $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
+                 
+                }
+            });
+        });
+    });
+
+</script>
+</html>
