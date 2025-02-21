@@ -1,5 +1,5 @@
 # CUPS Web Interface (RU)
-![Интерфейс](https://redabyq.space/images/github/cupswebinterface.png")
+![Интерфейс](https://redabyq.space/images/github/cupswebinterface.png)
 ##  1. Установка и запуск
 <span style="color: Yellow">- </span>Сначала <span style="color: cyan">клонируем репозиторий:</span>
 
