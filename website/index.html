@@ -38,7 +38,6 @@
             $("#b1").prop("disabled", true); // Disable the button after form submission
             var formData = new FormData(this); // Создание объекта FormData
             var actionUrl = "http://192.168.1.74:5230/api/print";
-
             $.ajax({
                 type: "POST",
                 url: actionUrl,
