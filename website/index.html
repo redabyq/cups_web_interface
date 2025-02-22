@@ -71,7 +71,6 @@
                     $("#status").text(response.msg);
                     await sleep(2000);
                     $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
-                  
                 },
                 error: async function(xhr, status, error) {
                     $("#status").text("Ошибка при получении статуса - "+ xhr.responseText);
