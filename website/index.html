@@ -33,24 +33,24 @@
             }
         });
         $("#printForm").submit(async function(e) {
-            e.preventDefault(); // Остановка стандартного отправления формы
+            e.preventDefault(); 
             $("#status").text("Загрузка...");
-            $("#b1").prop("disabled", true); // Disable the button after form submission
-            var formData = new FormData(this); // Создание объекта FormData
+            $("#b1").prop("disabled", true);
+            var formData = new FormData(this); 
             var actionUrl = "http://192.168.1.74:5230/api/print";
             $.ajax({
                 type: "POST",
                 url: actionUrl,
                 data: formData,
-                processData: false, // Отключаем обработку данных jQuery
-                contentType: false, // Отключаем установку content-type
+                processData: false, 
+                contentType: false,
                 success: async function(response) {
                     console.log(response.msg);
                     $("#status").text(response.msg);
                     await sleep(2000);
                     $("#status").html("ИНСТРУКЦИЯ<br>Добро пожаловать в Pryq!<br>Вы можете проверить статус принтера или начать печать выбрав нужный файл.<br>Лучше всего когда документы уже в PDF формате.")
                     location.reload();
-                    console.log(response.type); // Вывод ответа сервера
+                    console.log(response.type); 
                 },
                 error: async function(xhr, status, error) {
                     alert("Ошибка: " + error);
@@ -61,9 +61,9 @@
             });
         });
         $("#b2").click(async function(e) {
-            e.preventDefault(); // Предотвращаем стандартное поведение кнопки
+            e.preventDefault();
             $("#status").text("Загрузка...");
-            var statusUrl = "http://192.168.1.74:5230/api/status"; // Укажите правильный URL
+            var statusUrl = "http://192.168.1.74:5230/api/status"; 
 
             $.ajax({
                 type: "GET",
