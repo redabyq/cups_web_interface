@@ -64,7 +64,6 @@
             e.preventDefault();
             $("#status").text("Загрузка...");
             var statusUrl = "http://192.168.1.74:5230/api/status"; 
-
             $.ajax({
                 type: "GET",
                 url: statusUrl,
