@@ -1,3 +1,9 @@
+# <span style="color:red">РАЗРАБОТКА ЗАБРОШЕНА ЗА НЕНАДОБНОСТЬЮ </span>
+## Т. к. узнал как можно с помощью всегда включенного сервера с CUPS проделится принтером с окружением
+
+     sudo cupsctl --remote-admin --remote-any --share-printers
+     sudo usermod -aG lpadmin $USER
+# 
 # CUPS Web Interface (ENG)
 ##  1. Installation and launch
 <span style="color: Yellow">- </span>First, <span style="color: cyan">clone the repository:</span>
